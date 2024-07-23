@@ -9,10 +9,21 @@ import PageNotFound from "./pages/PageNotFound";
 import Users from "./pages/Users";
 import Settings from "./pages/Settings";
 import AppLayout from "./ui/AppLayout";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
+
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      staleTime: 0,
+    },
+  },
+});
 
 const App = () => {
   return (
-    <>
+    <QueryClientProvider client={queryClient}>
+      <ReactQueryDevtools />
       <GlobalStyles />
       <BrowserRouter>
         <Routes>
@@ -29,7 +40,7 @@ const App = () => {
           <Route path="*" element={<PageNotFound />} />
         </Routes>
       </BrowserRouter>
-    </>
+    </QueryClientProvider>
   );
 };
 
